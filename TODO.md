@@ -1,0 +1,8 @@
+- CRUD Anggota Klub
+- Absensi Anggota
+    - Absen sendiri dengan cek lokasi
+    - Absen oleh panitia
+- CRUD Skor Latihan
+    - Create new sesi
+    - Tambahkan Anggota
+    - Input skor oleh panitia

@@ -1,0 +1,28 @@
+# include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  errors:
+    curly_braces_in_flow_control_structures: error
+    constant_identifier_names: error
+    await_only_futures: error
+    avoid_init_to_null: error
+    prefer_void_to_null: error
+    no_duplicate_case_values: error
+    avoid_print: error
+    prefer_single_quotes: error
+    prefer_const_constructors: error
+
+linter:
+  rules:
+    curly_braces_in_flow_control_structures: true
+    constant_identifier_names: true
+    await_only_futures: true
+    avoid_init_to_null: true
+    prefer_void_to_null: true
+    no_duplicate_case_values: true
+    avoid_print: true 
+    prefer_single_quotes: true
+    prefer_const_constructors: true
+
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options
