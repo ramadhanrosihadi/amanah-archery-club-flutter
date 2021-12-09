@@ -48,4 +48,9 @@ class Fun {
     }
     return 'Web';
   }
+
+  static String replaceEmpty(String? value, [String replaceWith = '-']) {
+    if (value == null || value == 'null' || value == '' || value == '-') return replaceWith;
+    return value;
+  }
 }

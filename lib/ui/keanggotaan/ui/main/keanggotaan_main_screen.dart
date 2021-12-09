@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:starter_d/helper/util/nav.dart';
 import 'package:starter_d/helper/widget/coming_soon.dart';
-import 'package:starter_d/helper/widget/custom_future_builder.dart';
+import 'package:starter_d/ui/keanggotaan/ui/upsert/keanggotaan_upsert_screen.dart';
 
 class KeanggotaanMainScreen extends StatefulWidget {
   KeanggotaanMainScreen({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class _KeanggotaanMainScreenState extends State<KeanggotaanMainScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Nav.push(context, KeanggotaanMainScreen());
+          Nav.push(context, KeanggotaanUpsertScreen());
         },
         child: const Icon(Icons.add),
       ),
