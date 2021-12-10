@@ -1,12 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:starter_d/data/provider/navigation_bar_provider.dart';
+import 'package:starter_d/helper/constant/var.dart';
 import 'package:starter_d/helper/constant/vcolor.dart';
 import 'package:starter_d/ui/main/main_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -19,7 +23,7 @@ class MyApp extends StatelessWidget {
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Awesome App',
+        title: Var.appName,
         themeMode: ThemeMode.system,
         darkTheme: ThemeData.dark().copyWith(
           primaryColor: VColor.colorPrimary,

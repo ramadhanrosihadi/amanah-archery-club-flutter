@@ -35,6 +35,10 @@ class AppBarDefault extends StatelessWidget {
         ),
         onPressed: leadingOnPressed == null ? () => Nav.pop(context) : leadingOnPressed,
       ),
+      iconTheme: IconThemeData(
+        color: VColor.textColor,
+        size: 20,
+      ),
       actions: actions,
     );
   }

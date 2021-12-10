@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.starter_d">
+    package="id.rnq.archeryclub">
    <application
         android:label="Awesome App"
         android:icon="@mipmap/ic_launcher">

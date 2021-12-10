@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class VColor {
-  static Color colorPrimary = const Color(0xFF00628E);
+  static Color colorPrimary = const Color(0xFF004AAD);
   static Color colorPrimaryLight = const Color(0xFF00B8EE);
   static Color? colorPrimaryDark = Colors.blue[700];
   static Color? hintColor = Colors.grey[400];

@@ -4,7 +4,7 @@ A new Flutter project.
 
 ## Important commands
 - flutter pub deps
-- flutter pub run change_app_package_name:main id.example.app
+- flutter pub run change_app_package_name:main id.rnq.archeryclub
 - flutter pub run flutter_launcher_icons:main
 - ./gradlew signingReport
 

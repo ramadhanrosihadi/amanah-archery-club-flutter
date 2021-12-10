@@ -81,7 +81,7 @@ class ButtonDefault extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Text(
-                  text!,
+                  text,
                   style: TextStyle(
                     color: textColor,
                     fontWeight: fontWeight,

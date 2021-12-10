@@ -1,4 +1,4 @@
-package com.example.starter_d
+package id.rnq.archeryclub
 
 import io.flutter.embedding.android.FlutterActivity
 

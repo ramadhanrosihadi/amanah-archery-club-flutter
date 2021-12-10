@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "108060178536",
+    "project_id": "amanah-archery",
+    "storage_bucket": "amanah-archery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108060178536:android:93689d6093d0db440ce3dd",
+        "android_client_info": {
+          "package_name": "id.rnq.archeryclub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108060178536-2a4mg66d46cr0g0jsiu6c3tek9jf5594.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCX1oqvf5pWsaDUT3UsmjHqBepa-pwaYnI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108060178536-2a4mg66d46cr0g0jsiu6c3tek9jf5594.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:device_info/device_info.dart';
+import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import 'package:starter_d/helper/constant/var.dart';
 
@@ -52,5 +53,9 @@ class Fun {
   static String replaceEmpty(String? value, [String replaceWith = '-']) {
     if (value == null || value == 'null' || value == '' || value == '-') return replaceWith;
     return value;
+  }
+
+  static closeKeyboard(BuildContext context) {
+    FocusScope.of(context).requestFocus(FocusNode());
   }
 }
