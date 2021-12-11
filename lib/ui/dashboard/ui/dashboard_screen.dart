@@ -3,6 +3,7 @@ import 'package:starter_d/helper/constant/vcolor.dart';
 import 'package:starter_d/helper/util/nav.dart';
 import 'package:starter_d/ui/keanggotaan/ui/main/keanggotaan_main_screen.dart';
 import 'package:starter_d/ui/main/data/menu_model.dart';
+import 'package:starter_d/ui/pelatihan/ui/absensi/main/absensi_main_screen.dart';
 import 'package:starter_d/ui/pelatihan/ui/main/pelatihan_main_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -16,6 +17,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<MenuModel> menus = [
     MenuModel(0, 'Anggota Klub', KeanggotaanMainScreen(), Icons.usb_rounded),
     MenuModel(1, 'Pelatihan', PelatihanMainScreen(), Icons.exit_to_app),
+    MenuModel(2, 'Absensi', AbsensiMainScreen(), Icons.note_alt_sharp),
   ];
   @override
   Widget build(BuildContext context) {

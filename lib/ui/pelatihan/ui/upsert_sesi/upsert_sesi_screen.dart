@@ -1,21 +1,63 @@
 import 'package:flutter/material.dart';
+
 import 'package:starter_d/helper/util/fun.dart';
+import 'package:starter_d/helper/util/nav.dart';
+import 'package:starter_d/helper/util/vdialog.dart';
+import 'package:starter_d/helper/util/vtime.dart';
 import 'package:starter_d/helper/widget/button_default.dart';
 import 'package:starter_d/helper/widget/field_custom.dart';
 import 'package:starter_d/helper/widget/scaffold_default.dart';
+import 'package:starter_d/ui/pelatihan/data/sesi.dart';
 
 class UpsertSesiScreen extends StatefulWidget {
-  UpsertSesiScreen({Key? key}) : super(key: key);
+  UpsertSesiScreen({
+    Key? key,
+    this.sesi,
+  }) : super(key: key);
+  final Sesi? sesi;
 
   @override
   _UpsertSesiScreenState createState() => _UpsertSesiScreenState();
 }
 
 class _UpsertSesiScreenState extends State<UpsertSesiScreen> {
+  Sesi sesi = Sesi();
   TextEditingController tanggalController = TextEditingController();
-  TextEditingController waktuController = TextEditingController();
+  TextEditingController waktuMulaiController = TextEditingController();
+  TextEditingController waktuSelesaiController = TextEditingController();
   TextEditingController catatanController = TextEditingController();
-  DateTime? waktuLatihan;
+  DateTime? tanggal;
+  DateTime? waktuMulaiLatihan;
+  DateTime? waktuSelesaiLatihan;
+
+  bool isValid() {
+    if (tanggal == null) {
+      VDialog.createDialog(context, message: 'Tanggal wajib diisi');
+      return false;
+    } else if (waktuMulaiLatihan == null) {
+      VDialog.createDialog(context, message: 'Waktu mulai wajib diisi');
+      return false;
+    } else if (catatanController.text.isEmpty) {
+      VDialog.createDialog(context, message: 'Info lokasi wajib diisi');
+      return false;
+    }
+    sesi.catatan = catatanController.text;
+    sesi.tanggal = tanggal!.toIso8601String();
+    sesi.waktuMulai = VTime.defaultFormat(waktuMulaiLatihan!.toIso8601String(), to: 'HH:mm:ss');
+    if (waktuSelesaiLatihan != null) {
+      sesi.waktuSelesai = VTime.defaultFormat(waktuSelesaiLatihan!.toIso8601String(), to: 'HH:mm:ss');
+    }
+    return true;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.sesi == null) {
+      catatanController.text = 'Masjid As-Salam Purimas';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScaffoldDefault(
@@ -26,6 +68,12 @@ class _UpsertSesiScreenState extends State<UpsertSesiScreen> {
           child: Column(
             children: [
               const SizedBox(height: 20),
+              FieldCustom(
+                controller: catatanController,
+                label: 'Lokasi latihan',
+                textInputType: TextInputType.multiline,
+              ),
+              const SizedBox(height: 15),
               FieldCustom(
                 controller: tanggalController,
                 label: 'Tanggal Latihan',
@@ -42,10 +90,7 @@ class _UpsertSesiScreenState extends State<UpsertSesiScreen> {
                     String result = pickedDate.toString().substring(0, 10);
                     setState(() {
                       DateTime defaultDate = DateTime.now();
-                      if (waktuLatihan != null) {
-                        defaultDate = waktuLatihan!;
-                      }
-                      waktuLatihan = DateTime(defaultDate.year, defaultDate.month, defaultDate.day, defaultDate.hour, defaultDate.minute);
+                      tanggal = DateTime(defaultDate.year, defaultDate.month, defaultDate.day);
                       tanggalController.text = result;
                     });
                   }
@@ -53,8 +98,8 @@ class _UpsertSesiScreenState extends State<UpsertSesiScreen> {
               ),
               const SizedBox(height: 15),
               FieldCustom(
-                controller: waktuController,
-                label: 'Jam Latihan',
+                controller: waktuMulaiController,
+                label: 'Jam Mulai Latihan',
                 onTapDown: (TapDownDetails tapDownDetails) async {
                   Fun.closeKeyboard(context);
                   final TimeOfDay? result = await showTimePicker(
@@ -64,25 +109,56 @@ class _UpsertSesiScreenState extends State<UpsertSesiScreen> {
                   if (result != null) {
                     setState(() {
                       DateTime defaultDate = DateTime.now();
-                      if (waktuLatihan != null) {
-                        defaultDate = waktuLatihan!;
+                      if (waktuMulaiLatihan != null) {
+                        defaultDate = waktuMulaiLatihan!;
                       }
-                      waktuLatihan = DateTime(defaultDate.year, defaultDate.month, defaultDate.day, result.hour, result.minute);
-                      waktuController.text = result.format(context);
+                      waktuMulaiLatihan = DateTime(defaultDate.year, defaultDate.month, defaultDate.day, result.hour, result.minute);
+                      waktuMulaiController.text = result.format(context);
                     });
                   }
                 },
               ),
               const SizedBox(height: 15),
               FieldCustom(
-                controller: catatanController,
-                label: 'Catatan',
-                textInputType: TextInputType.multiline,
+                controller: waktuSelesaiController,
+                label: 'Jam Selesai Latihan',
+                onTapDown: (TapDownDetails tapDownDetails) async {
+                  Fun.closeKeyboard(context);
+                  final TimeOfDay? result = await showTimePicker(
+                    initialTime: TimeOfDay.now(),
+                    context: context,
+                  );
+                  if (result != null) {
+                    setState(() {
+                      DateTime defaultDate = DateTime.now();
+                      if (waktuSelesaiLatihan != null) {
+                        defaultDate = waktuSelesaiLatihan!;
+                      }
+                      waktuSelesaiLatihan = DateTime(defaultDate.year, defaultDate.month, defaultDate.day, result.hour, result.minute);
+                      waktuSelesaiController.text = result.format(context);
+                    });
+                  }
+                },
               ),
               const SizedBox(height: 25),
               ButtonDefault(
                 text: 'BUAT BARU',
-                onPressed: () async {},
+                onPressed: () async {
+                  if (isValid()) {
+                    if (widget.sesi != null) {
+                      await Sesi.update(context, sesi);
+                      await VDialog.createDialog(context, message: 'Perubahan data berhasil disimpan', withBackButton: false);
+                    } else {
+                      bool result = await Sesi.insert(context, sesi);
+                      if (result) {
+                        await VDialog.createDialog(context, message: 'Sesi baru berhasil dibuat', withBackButton: false);
+                      } else {
+                        await VDialog.createDialog(context, message: 'Masih ada sesi aktif yang belum ditutup', title: 'Gagal', withBackButton: false);
+                      }
+                    }
+                    Nav.pop(context);
+                  }
+                },
               ),
               const SizedBox(height: 50),
             ],
