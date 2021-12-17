@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:starter_d/helper/util/fun.dart';
@@ -5,20 +6,23 @@ import 'package:starter_d/helper/util/vtime.dart';
 
 class Anggota {
   String? id;
-  String nama;
-  String nomorHp;
-  String alamat;
+  String? nama;
+  String? nomorHp;
+  String? email;
+  String? alamat;
   DateTime? tanggalLahir;
   DateTime? tanggalBergabung;
-  String jenisKelamin;
-  String nik;
-  String pekerjaan;
+  String? jenisKelamin;
+  String? nik;
+  String? pekerjaan;
   int? totalLatihan;
-
+  String? kategori;
+  String? fotoProfilUrl;
   Anggota({
     this.id = '',
     this.nama = '',
     this.nomorHp = '',
+    this.email = '',
     this.alamat = '',
     this.tanggalLahir,
     this.tanggalBergabung,
@@ -26,29 +30,16 @@ class Anggota {
     this.nik = '',
     this.pekerjaan = '',
     this.totalLatihan = 0,
+    this.kategori = '',
+    this.fotoProfilUrl = '',
   });
-
-  static Anggota? fromMap(Map<String, dynamic>? map) {
-    if (map == null) return null;
-    return Anggota(
-      id: map['id'],
-      nama: map['nama'],
-      nomorHp: map['nomorHp'],
-      alamat: map['alamat'],
-      tanggalLahir: map['tanggalLahir']?.toDate(),
-      tanggalBergabung: map['tanggalBergabung']?.toDate(),
-      jenisKelamin: map['jenisKelamin'],
-      nik: map['nik'],
-      pekerjaan: map['pekerjaan'],
-      totalLatihan: map['totalLatihan'] ?? 0,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'nama': nama,
       'nomorHp': nomorHp,
+      'email': email,
       'alamat': alamat,
       'tanggalLahir': tanggalLahir,
       'tanggalBergabung': tanggalBergabung,
@@ -56,8 +47,32 @@ class Anggota {
       'nik': nik,
       'pekerjaan': pekerjaan,
       'totalLatihan': totalLatihan,
+      'kategori': kategori,
+      'fotoProfilUrl': fotoProfilUrl,
     };
   }
+
+  factory Anggota.fromMap(Map<String, dynamic> map) {
+    return Anggota(
+      id: map['id'] ?? '',
+      nama: map['nama'] ?? '',
+      nomorHp: map['nomorHp'] ?? '',
+      email: map['email'] ?? '',
+      alamat: map['alamat'] ?? '',
+      tanggalLahir: map['alamat'],
+      tanggalBergabung: map['alamat'],
+      jenisKelamin: map['jenisKelamin'] ?? '',
+      nik: map['nik'] ?? '',
+      pekerjaan: map['pekerjaan'] ?? '',
+      totalLatihan: map['totalLatihan']?.toInt() ?? 0,
+      kategori: map['kategori'] ?? '',
+      fotoProfilUrl: map['fotoProfilUrl'] ?? '',
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  static Anggota? fromJson(String? source) => source != null ? Anggota.fromMap(json.decode(source)) : null;
 
   String tanggalBergabungString() {
     if (tanggalBergabung == null) return '-';

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:starter_d/data/provider/navigation_bar_provider.dart';
 import 'package:starter_d/helper/constant/var.dart';
 import 'package:starter_d/helper/constant/vcolor.dart';
+import 'package:starter_d/ui/autentikasi/ui/splash_screen.dart';
 import 'package:starter_d/ui/main/main_screen.dart';
 
 void main() async {
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
               )
               .apply(bodyColor: VColor.textColor, displayColor: VColor.textColor),
         ),
-        home: MainScreen(),
+        home: SplashScreen(),
       ),
     );
   }

@@ -27,12 +27,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 20),
-              Text(
-                'Amanah Archery',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: VColor.colorPrimary),
+              const SizedBox(height: 50),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: Image.asset('assets/images/logo.png'),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               GridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),

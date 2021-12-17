@@ -3,6 +3,7 @@ import 'package:starter_d/helper/constant/vcolor.dart';
 import 'package:starter_d/helper/widget/coming_soon.dart';
 import 'package:starter_d/ui/dashboard/ui/dashboard_screen.dart';
 import 'package:starter_d/ui/example/ui/task_list.dart';
+import 'package:starter_d/ui/profile/ui/main_profile/main_profile_screen.dart';
 
 class MenuModel {
   final String label;
@@ -23,7 +24,7 @@ class MenuModel {
     return [
       MenuModel(0, labels[0], DashboardScreen(), Icons.home),
       MenuModel(1, labels[1], ComingSoon(message: labels[1]), Icons.dashboard),
-      MenuModel(4, labels[2], ComingSoon(message: labels[2]), Icons.person),
+      MenuModel(4, labels[2], MainProfileScreen(), Icons.person),
     ];
   }
 

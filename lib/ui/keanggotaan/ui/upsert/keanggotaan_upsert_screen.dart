@@ -50,16 +50,16 @@ class _KeanggotaanUpsertScreenState extends State<KeanggotaanUpsertScreen> {
     } else if (widget.anggota != null) {
       setState(() {
         anggota = widget.anggota!;
-        namaController.text = anggota.nama;
-        jenisKelaminController.text = anggota.jenisKelamin;
-        nomorHpController.text = anggota.nomorHp;
-        alamatController.text = anggota.alamat;
+        namaController.text = Fun.replaceEmpty(anggota.nama);
+        jenisKelaminController.text = Fun.replaceEmpty(anggota.jenisKelamin);
+        nomorHpController.text = Fun.replaceEmpty(anggota.nomorHp);
+        alamatController.text = Fun.replaceEmpty(anggota.alamat);
         tanggalLahirController.text = VTime.defaultFormat(anggota.tanggalLahirString(), to: 'dd/MM/yyy');
         tanggalLahir = anggota.tanggalLahir;
         tanggalDaftarController.text = VTime.defaultFormat(anggota.tanggalBergabungString(), to: 'dd/MM/yyy');
         tanggalDaftar = anggota.tanggalBergabung;
-        nikController.text = anggota.nik;
-        pekerjaanController.text = anggota.pekerjaan;
+        nikController.text = Fun.replaceEmpty(anggota.nik);
+        pekerjaanController.text = Fun.replaceEmpty(anggota.pekerjaan);
       });
     }
   }
