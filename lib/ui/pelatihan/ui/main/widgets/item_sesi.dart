@@ -15,14 +15,14 @@ class ItemSesi extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: Container(
-        color: VColor.colorPrimary,
+        color: data.waktuSelesai == null ? Colors.green : VColor.colorPrimary,
         padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              VTime.defaultFormat(Fun.replaceEmpty(data.tanggal)),
+              VTime.defaultFormat(Fun.replaceEmpty(data.tanggal), to: 'dd MMMM yyyy'),
               style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 3),
@@ -32,7 +32,7 @@ class ItemSesi extends StatelessWidget {
             ),
             const SizedBox(height: 3),
             Text(
-              '${VTime.defaultFormat(Fun.replaceEmpty(data.waktuMulai))} s/d ${VTime.defaultFormat(Fun.replaceEmpty(data.waktuSelesai, "..."))}',
+              '${data.getWaktuMulai()} s/d ${data.getWaktuSelesai()}',
               style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w400),
             ),
             const SizedBox(height: 10),

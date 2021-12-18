@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:starter_d/helper/constant/vcolor.dart';
+import 'package:starter_d/helper/util/fun.dart';
 import 'package:starter_d/ui/keanggotaan/data/anggota.dart';
 
 class KartuAnggota extends StatelessWidget {
@@ -23,12 +24,12 @@ class KartuAnggota extends StatelessWidget {
                 Image.asset('assets/images/user.png', width: 60),
                 const SizedBox(height: 10),
                 Text(
-                  anggota.nama,
+                  Fun.replaceEmpty(anggota.nama),
                   style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  anggota.alamat,
+                  Fun.replaceEmpty(anggota.alamat),
                   style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w400),
                 ),
               ],

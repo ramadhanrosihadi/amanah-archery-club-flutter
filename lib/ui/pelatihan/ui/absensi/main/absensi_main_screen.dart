@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:starter_d/helper/constant/vcolor.dart';
+import 'package:starter_d/helper/util/nav.dart';
 import 'package:starter_d/helper/widget/scaffold_default.dart';
+import 'package:starter_d/ui/pelatihan/ui/absensi/main/absensi_sesi_latihan_screen.dart';
 import 'package:starter_d/ui/pelatihan/ui/absensi/main/widgets/sesi_aktif_card.dart';
 import 'package:starter_d/ui/pelatihan/ui/main/widgets/item_sesi.dart';
 

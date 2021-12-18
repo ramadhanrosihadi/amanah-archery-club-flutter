@@ -55,6 +55,12 @@ class _UpsertSesiScreenState extends State<UpsertSesiScreen> {
     super.initState();
     if (widget.sesi == null) {
       catatanController.text = 'Masjid As-Salam Purimas';
+    } else {
+      sesi = widget.sesi!;
+      catatanController.text = Fun.replaceEmpty(sesi.catatan);
+      tanggalController.text = Fun.replaceEmpty(sesi.tanggal);
+      waktuMulaiController.text = Fun.replaceEmpty(sesi.waktuMulai);
+      waktuSelesaiController.text = Fun.replaceEmpty(sesi.waktuSelesai);
     }
   }
 

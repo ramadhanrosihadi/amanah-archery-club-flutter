@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:starter_d/helper/util/fun.dart';
 import 'package:starter_d/helper/util/nav.dart';
 import 'package:starter_d/ui/keanggotaan/data/anggota.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,20 +7,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserPref {
   static Future<Anggota?> saveUser(Anggota user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('user', user.toJson());
+    prefs.setString('user', user.toJsonLogin());
     prefs.setString('username', user.nomorHp!);
-    return Anggota.fromJson(prefs.getString('anggota'));
+    return Anggota.fromJsonLogin(prefs.getString('user'));
   }
 
   static Future<Anggota?> loadUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Anggota? user = Anggota.fromJson(prefs.getString('anggota'));
+    Anggota? user = Anggota.fromJsonLogin(prefs.getString('user'));
+    Fun.showLog('loadUser : ${prefs.getString('user')}');
     return user;
   }
 
   static Future<bool> isAuthenticated() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Anggota? user = Anggota.fromJson(prefs.getString('anggota'));
+    Anggota? user = Anggota.fromJsonLogin(prefs.getString('user'));
     if (user != null && user.id != null) {
       return true;
     }

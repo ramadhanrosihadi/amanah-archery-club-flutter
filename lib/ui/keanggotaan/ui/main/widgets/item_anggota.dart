@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:starter_d/helper/constant/vcolor.dart';
+import 'package:starter_d/helper/util/fun.dart';
 import 'package:starter_d/ui/keanggotaan/data/anggota.dart';
 
 class ItemAnggota extends StatelessWidget {
@@ -12,19 +13,19 @@ class ItemAnggota extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: Container(
-        color: VColor.colorPrimary,
+        color: anggota.isPengurus() ? VColor.colorPrimary : Colors.green,
         padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              anggota.nama,
+              '${Fun.replaceEmpty(anggota.nama)}',
               style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 3),
             Text(
-              anggota.alamat,
+              '${Fun.replaceEmpty(anggota.roles).toUpperCase()} - ${Fun.replaceEmpty(anggota.jenisKelamin)} - ${anggota.umur()} tahun',
               style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w400),
             ),
             const SizedBox(height: 10),

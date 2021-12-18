@@ -49,6 +49,20 @@ class Sesi {
 
   factory Sesi.fromJson(String source) => Sesi.fromMap(json.decode(source));
 
+  String getWaktuMulai() {
+    if (waktuMulai != null && waktuMulai!.length > 5) {
+      return this.waktuMulai!.substring(0, 5);
+    }
+    return '-';
+  }
+
+  String getWaktuSelesai() {
+    if (waktuSelesai != null && waktuSelesai!.length > 5) {
+      return this.waktuSelesai!.substring(0, 5);
+    }
+    return '(belum selesai)';
+  }
+
   static List<Sesi> fromListDynamic(List<dynamic>? datas) {
     if (datas == null) return [];
     return datas.map<Sesi>((e) => Sesi.fromMap(e)).toList();

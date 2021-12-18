@@ -20,6 +20,7 @@ class _MainScreenState extends State<MainScreen> {
     final provider = Provider.of<NavigationBarProvider>(context);
     return ResponsiveLayout(
       mobile: Scaffold(
+        backgroundColor: Colors.white,
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: provider.currentIndex,
           onTap: (index) {

@@ -32,11 +32,19 @@ class VTime {
     return convertToView(dateString);
   }
 
-  static String fromTimeStampToDefaultFormat(Timestamp? timestamp) {
+  static String fromTimeStampToDefaultFormat(Timestamp? timestamp, {String format = 'dd MMMM yyyy'}) {
     if (timestamp == null) return '';
     var date = DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch);
-    String dateString = DateFormat('yyyy-MM-dd HH:mm:ss').format(date);
-    return defaultFormat(dateString, to: 'dd MMMM yyyy kk:mm');
+    return DateFormat(format).format(date);
+  }
+
+  static int yearDurationFromTimeStamp(Timestamp? timestamp) {
+    if (timestamp == null) return 0;
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch);
+    int dateMilliSecond = dateTime.millisecondsSinceEpoch;
+    int nowMilliSecond = DateTime.now().millisecondsSinceEpoch;
+    int diff = nowMilliSecond - dateMilliSecond;
+    return (diff / 31557600000).ceil();
   }
 
   static String convertToView(String date, {String from = 'yyyy-MM-dd HH:mm:ss', String to = 'dd/MM/yy kk:mm'}) {
