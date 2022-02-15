@@ -71,7 +71,7 @@ class Sesi {
   static Future<bool> insert(BuildContext context, Sesi data) async {
     List<Sesi> existingDatas = await Sesi.gets();
     for (Sesi item in existingDatas) {
-      if (item.waktuSelesai == null) {
+      if (item.tanggal == data.tanggal) {
         return false;
       }
     }

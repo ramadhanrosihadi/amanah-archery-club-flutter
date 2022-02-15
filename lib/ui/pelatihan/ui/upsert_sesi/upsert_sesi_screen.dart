@@ -9,6 +9,8 @@ import 'package:starter_d/helper/widget/field_custom.dart';
 import 'package:starter_d/helper/widget/scaffold_default.dart';
 import 'package:starter_d/ui/pelatihan/data/sesi.dart';
 
+import '../../../../helper/constant/vcolor.dart';
+
 class UpsertSesiScreen extends StatefulWidget {
   UpsertSesiScreen({
     Key? key,
@@ -64,10 +66,39 @@ class _UpsertSesiScreenState extends State<UpsertSesiScreen> {
     }
   }
 
+  String getTitle() {
+    if (widget.sesi != null) return 'Edit Sesi';
+    return 'Buat Sesi Latihan';
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScaffoldDefault(
-      textTitle: 'Buat Sesi Latihan',
+      actions: [
+        PopupMenuButton<String>(
+          onSelected: (value) async {
+            if (value == 'Delete') {
+              bool result = await VDialog.createDialog(context, message: 'Apakah anda yakin akan menghapus data sesi latihan pada ${sesi.tanggal}?');
+              if (result) {
+                await sesi.delete();
+                Nav.pop(context, true);
+              }
+            }
+          },
+          itemBuilder: (BuildContext context) {
+            return ['Delete'].map((String choice) {
+              return PopupMenuItem<String>(
+                value: choice,
+                child: Text(
+                  choice,
+                  style: TextStyle(color: VColor.textColor),
+                ),
+              );
+            }).toList();
+          },
+        ),
+      ],
+      textTitle: getTitle(),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -88,7 +119,7 @@ class _UpsertSesiScreenState extends State<UpsertSesiScreen> {
                   final DateTime? pickedDate = await showDatePicker(
                     context: context,
                     firstDate: DateTime(DateTime.now().month - 3),
-                    lastDate: DateTime.now(),
+                    lastDate: DateTime(DateTime.now().day + 14),
                     helpText: 'Pilih tanggal latihan',
                     initialDate: DateTime.now(),
                   );
@@ -105,7 +136,7 @@ class _UpsertSesiScreenState extends State<UpsertSesiScreen> {
               const SizedBox(height: 15),
               FieldCustom(
                 controller: waktuMulaiController,
-                label: 'Jam Mulai Latihan',
+                label: 'Jam Mulai',
                 onTapDown: (TapDownDetails tapDownDetails) async {
                   Fun.closeKeyboard(context);
                   final TimeOfDay? result = await showTimePicker(
@@ -127,7 +158,7 @@ class _UpsertSesiScreenState extends State<UpsertSesiScreen> {
               const SizedBox(height: 15),
               FieldCustom(
                 controller: waktuSelesaiController,
-                label: 'Jam Selesai Latihan',
+                label: 'Jam Selesai',
                 onTapDown: (TapDownDetails tapDownDetails) async {
                   Fun.closeKeyboard(context);
                   final TimeOfDay? result = await showTimePicker(
@@ -148,7 +179,7 @@ class _UpsertSesiScreenState extends State<UpsertSesiScreen> {
               ),
               const SizedBox(height: 25),
               ButtonDefault(
-                text: 'BUAT BARU',
+                text: widget.sesi != null ? 'BUAT BARU' : 'SIMPAN',
                 onPressed: () async {
                   if (isValid()) {
                     if (widget.sesi != null) {
@@ -159,7 +190,7 @@ class _UpsertSesiScreenState extends State<UpsertSesiScreen> {
                       if (result) {
                         await VDialog.createDialog(context, message: 'Sesi baru berhasil dibuat', withBackButton: false);
                       } else {
-                        await VDialog.createDialog(context, message: 'Masih ada sesi aktif yang belum ditutup', title: 'Gagal', withBackButton: false);
+                        await VDialog.createDialog(context, message: 'Sesi pada tanggal ${sesi.tanggal} sudah dibuat', title: 'Gagal', withBackButton: false);
                       }
                     }
                     Nav.pop(context);

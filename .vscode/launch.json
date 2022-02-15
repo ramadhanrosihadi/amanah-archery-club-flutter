@@ -12,7 +12,7 @@
             "args": []
         },
         {
-            "name": "UmrahPro Web",
+            "name": "Web",
             "request": "launch",
             "program": "lib/main.dart",
             "type": "dart",
