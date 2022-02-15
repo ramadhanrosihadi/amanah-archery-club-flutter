@@ -57,10 +57,20 @@ class _UpsertSesiScreenState extends State<UpsertSesiScreen> {
     super.initState();
     if (widget.sesi == null) {
       catatanController.text = 'Masjid As-Salam Purimas';
+      DateTime defaultDate = DateTime.now();
+      tanggal = DateTime(defaultDate.year, defaultDate.month, defaultDate.day);
+      tanggalController.text = tanggal!.toIso8601String();
     } else {
       sesi = widget.sesi!;
       catatanController.text = Fun.replaceEmpty(sesi.catatan);
       tanggalController.text = Fun.replaceEmpty(sesi.tanggal);
+
+      // DateTime defaultDate = DateTime.now();
+      // if (waktuMulaiLatihan != null) {
+      //   defaultDate = waktuMulaiLatihan!;
+      // }
+      // waktuMulaiLatihan = DateTime(defaultDate.year, defaultDate.month, defaultDate.day, result.hour, result.minute);
+      // waktuMulaiController.text = result.format(context);
       waktuMulaiController.text = Fun.replaceEmpty(sesi.waktuMulai);
       waktuSelesaiController.text = Fun.replaceEmpty(sesi.waktuSelesai);
     }
