@@ -209,4 +209,63 @@ class VDialog {
       elevation: 8.0,
     );
   }
+
+  static Future popupError(BuildContext context, String error, {String title = Var.appName}) async {
+    return await showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              title,
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+            ),
+            contentPadding: const EdgeInsets.all(20),
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
+            content: Text(
+              error,
+              style: const TextStyle(fontWeight: FontWeight.w300),
+            ),
+            actions: [
+              FlatButton(
+                onPressed: () {
+                  Navigator.pop(context, true);
+                },
+                child: const Text('Ok'),
+              )
+            ],
+          );
+        });
+  }
+
+  static Future popupSuccess(BuildContext context, String message) async {
+    return await showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: SelectableText(
+              Var.appName,
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+            ),
+            contentPadding: const EdgeInsets.all(20),
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
+            content: SelectableText(
+              message,
+              style: const TextStyle(fontWeight: FontWeight.w300),
+            ),
+            actions: [
+              FlatButton(
+                onPressed: () {
+                  Navigator.pop(context, true);
+                },
+                child: Text(
+                  'Ok',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.black),
+                ),
+              )
+            ],
+          );
+        });
+  }
 }

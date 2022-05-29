@@ -5,8 +5,13 @@ import 'package:starter_d/helper/widget/coming_soon.dart';
 import 'package:starter_d/helper/widget/loading_view.dart';
 import 'package:starter_d/helper/widget/scaffold_default.dart';
 import 'package:starter_d/ui/keanggotaan/data/anggota.dart';
+import 'package:starter_d/ui/keanggotaan/ui/main/keanggotaan_migrasi_screen.dart';
 import 'package:starter_d/ui/keanggotaan/ui/main/widgets/item_anggota.dart';
 import 'package:starter_d/ui/keanggotaan/ui/upsert/keanggotaan_upsert_screen.dart';
+
+import '../../../../data/preference/user_pref.dart';
+import '../../../../helper/constant/vcolor.dart';
+import '../../../../helper/util/vdialog.dart';
 
 class KeanggotaanMainScreen extends StatefulWidget {
   KeanggotaanMainScreen({Key? key}) : super(key: key);
@@ -16,6 +21,19 @@ class KeanggotaanMainScreen extends StatefulWidget {
 }
 
 class _KeanggotaanMainScreenState extends State<KeanggotaanMainScreen> {
+  Anggota? user;
+  List<String> actionTitles = ['Migrasi Excel'];
+
+  @override
+  void initState() {
+    super.initState();
+    UserPref.loadUser().then((value) {
+      setState(() {
+        user = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Query<Map<String, dynamic>> jamaahs = FirebaseFirestore.instance.collection('anggotas');
@@ -27,6 +45,28 @@ class _KeanggotaanMainScreenState extends State<KeanggotaanMainScreen> {
         },
         child: const Icon(Icons.add),
       ),
+      actions: user != null && user!.isPengurus()
+          ? [
+              PopupMenuButton<String>(
+                onSelected: (value) async {
+                  if (value == 'Migrasi Excel') {
+                    Nav.push(context, KeanggotaanMigrasiScreen());
+                  }
+                },
+                itemBuilder: (BuildContext context) {
+                  return actionTitles.map((String choice) {
+                    return PopupMenuItem<String>(
+                      value: choice,
+                      child: Text(
+                        choice,
+                        style: TextStyle(color: VColor.textColor),
+                      ),
+                    );
+                  }).toList();
+                },
+              ),
+            ]
+          : [],
       body: StreamBuilder<QuerySnapshot>(
         stream: jamaahs.snapshots(),
         builder: (_, snapshot) {

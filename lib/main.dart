@@ -25,32 +25,10 @@ class MyApp extends StatelessWidget {
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: Var.appName,
-        themeMode: ThemeMode.system,
-        darkTheme: ThemeData.dark().copyWith(
-          primaryColor: VColor.colorPrimary,
-          textTheme: GoogleFonts.robotoTextTheme()
-              .copyWith(
-                headline1: GoogleFonts.raleway().copyWith(fontSize: 55, fontWeight: FontWeight.bold, color: Colors.white),
-                headline2: GoogleFonts.raleway().copyWith(fontSize: 50, fontWeight: FontWeight.bold, color: Colors.white),
-                headline3: GoogleFonts.raleway().copyWith(fontSize: 45, fontWeight: FontWeight.bold, color: Colors.white),
-                headline4: GoogleFonts.raleway().copyWith(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),
-                headline5: GoogleFonts.raleway().copyWith(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.white),
-                headline6: GoogleFonts.raleway().copyWith(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
-              )
-              .apply(bodyColor: Colors.white, displayColor: Colors.white),
-        ),
+        themeMode: ThemeMode.light,
         theme: ThemeData.light().copyWith(
           primaryColor: VColor.colorPrimary,
-          textTheme: GoogleFonts.robotoTextTheme()
-              .copyWith(
-                headline1: GoogleFonts.raleway().copyWith(fontSize: 55, fontWeight: FontWeight.bold, color: VColor.textColor),
-                headline2: GoogleFonts.raleway().copyWith(fontSize: 50, fontWeight: FontWeight.bold, color: VColor.textColor),
-                headline3: GoogleFonts.raleway().copyWith(fontSize: 45, fontWeight: FontWeight.bold, color: VColor.textColor),
-                headline4: GoogleFonts.raleway().copyWith(fontSize: 40, fontWeight: FontWeight.bold, color: VColor.textColor),
-                headline5: GoogleFonts.raleway().copyWith(fontSize: 35, fontWeight: FontWeight.bold, color: VColor.textColor),
-                headline6: GoogleFonts.raleway().copyWith(fontSize: 30, fontWeight: FontWeight.bold, color: VColor.textColor),
-              )
-              .apply(bodyColor: VColor.textColor, displayColor: VColor.textColor),
+          textTheme: GoogleFonts.robotoTextTheme().apply(bodyColor: VColor.textColor, displayColor: VColor.textColor),
         ),
         home: SplashScreen(),
       ),

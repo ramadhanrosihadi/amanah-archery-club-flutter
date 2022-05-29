@@ -5,9 +5,15 @@ import 'package:starter_d/data/preference/user_pref.dart';
 import 'package:starter_d/helper/util/fun.dart';
 import 'package:starter_d/helper/util/vdialog.dart';
 import 'package:starter_d/helper/util/vtime.dart';
+import 'package:syncfusion_flutter_xlsio/xlsio.dart';
+import 'dart:io';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Anggota {
   String? id;
+  String? code;
+  String? username;
   String? nama;
   String? nomorHp;
   String? email;
@@ -24,6 +30,8 @@ class Anggota {
   String? roles;
   Anggota({
     this.id = '',
+    this.code = '',
+    this.username = '',
     this.nama = '',
     this.nomorHp = '',
     this.email = '',
@@ -43,6 +51,8 @@ class Anggota {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'code': code,
+      'username': username,
       'nama': nama,
       'nomorHp': nomorHp,
       'email': email,
@@ -63,6 +73,8 @@ class Anggota {
   Map<String, dynamic> toMapLogin() {
     return {
       'id': id,
+      'code': code,
+      'username': username,
       'nama': nama,
       'nomorHp': nomorHp,
       'email': email,
@@ -81,6 +93,8 @@ class Anggota {
   static Anggota? fromMap(Map<String, dynamic> map) {
     return Anggota(
       id: map['id'] ?? '',
+      code: map['code'] ?? '',
+      username: map['username'] ?? '',
       nama: map['nama'] ?? '',
       nomorHp: map['nomorHp'] ?? '',
       email: map['email'] ?? '',
@@ -105,6 +119,8 @@ class Anggota {
   static Anggota? fromMapLogin(Map<String, dynamic> map) {
     return Anggota(
       id: map['id'] ?? '',
+      code: map['code'] ?? '',
+      username: map['username'] ?? '',
       nama: map['nama'] ?? '',
       nomorHp: map['nomorHp'] ?? '',
       email: map['email'] ?? '',
@@ -146,6 +162,16 @@ class Anggota {
   String tanggalBergabungString() {
     if (tanggalBergabung == null) return '-';
     return VTime.fromTimeStampToDefaultFormat(tanggalBergabung);
+  }
+
+  String tanggalBergabungISO() {
+    if (tanggalBergabung == null) return '';
+    return VTime.fromTimeStampToDefaultFormat(tanggalBergabung, format: 'yyyy-MM-dd');
+  }
+
+  String tanggalLahirISO() {
+    if (tanggalLahir == null) return '';
+    return VTime.fromTimeStampToDefaultFormat(tanggalLahir, format: 'yyyy-MM-dd');
   }
 
   String tanggalLahirString() {
@@ -247,5 +273,77 @@ class Anggota {
       }
     }
     return false;
+  }
+
+  static Future downloadExcel() async {
+    List<Anggota> anggotas = await Anggota.gets();
+    int totalWorkSheet = 1;
+    final Workbook workbook = Workbook(totalWorkSheet);
+    int sheetIndex = 0;
+    CellStyle contentStyle = CellStyle(workbook);
+    contentStyle.fontSize = 12;
+    contentStyle.hAlign = HAlignType.center;
+    contentStyle.vAlign = VAlignType.center;
+    contentStyle.bold = false;
+    CellStyle headerStyle = CellStyle(workbook);
+    headerStyle.bold = true;
+    headerStyle.fontSize = 13;
+    headerStyle.hAlign = HAlignType.center;
+    headerStyle.vAlign = VAlignType.center;
+    final Worksheet sheet = workbook.worksheets[sheetIndex];
+    sheet.name = 'Data Anggota';
+    int row = 1;
+    sheet.setColumnWidthInPixels(1, 40);
+    sheet.setColumnWidthInPixels(2, 60);
+    sheet.setColumnWidthInPixels(3, 100);
+    sheet.setColumnWidthInPixels(4, 300);
+    sheet.setColumnWidthInPixels(5, 120);
+    sheet.setColumnWidthInPixels(6, 150);
+    sheet.setColumnWidthInPixels(7, 170);
+    sheet.setColumnWidthInPixels(8, 150);
+    sheet.setColumnWidthInPixels(9, 150);
+    sheet.setColumnWidthInPixels(10, 150);
+    sheet.setColumnWidthInPixels(11, 150);
+    sheet.setColumnWidthInPixels(12, 500);
+    sheet.setColumnWidthInPixels(13, 200);
+    sheet.getRangeByIndex(row, 1).setText('No.');
+    sheet.getRangeByIndex(row, 2).setText('Kode');
+    sheet.getRangeByIndex(row, 3).setText('Username');
+    sheet.getRangeByIndex(row, 4).setText('Nama Lengkap');
+    sheet.getRangeByIndex(row, 5).setText('Jenis Kelamin');
+    sheet.getRangeByIndex(row, 6).setText('Nomor HP');
+    sheet.getRangeByIndex(row, 7).setText('Email');
+    sheet.getRangeByIndex(row, 8).setText('Tanggal Lahir');
+    sheet.getRangeByIndex(row, 9).setText('Status Keanggotaan');
+    sheet.getRangeByIndex(row, 10).setText('Tanggal Bergabung');
+    sheet.getRangeByIndex(row, 11).setText('Pekerjaan');
+    sheet.getRangeByIndex(row, 12).setText('Alamat');
+    sheet.getRangeByIndex(row, 13).setText('Foto Profil');
+    sheet.getRangeByName('A1:Q1').cellStyle = headerStyle;
+    sheet.getRangeByName('A2:Q300').cellStyle = contentStyle;
+    for (Anggota anggota in anggotas) {
+      row++;
+      sheet.getRangeByIndex(row, 1).setText('${row - 1}');
+      sheet.getRangeByIndex(row, 2).setText(anggota.code);
+      sheet.getRangeByIndex(row, 3).setText(anggota.username);
+      sheet.getRangeByIndex(row, 4).setText(anggota.nama);
+      sheet.getRangeByIndex(row, 5).setText(anggota.jenisKelamin);
+      sheet.getRangeByIndex(row, 6).setText(anggota.nomorHp);
+      sheet.getRangeByIndex(row, 7).setText(anggota.email);
+      sheet.getRangeByIndex(row, 8).setText(anggota.tanggalLahirISO());
+      sheet.getRangeByIndex(row, 9).setText(anggota.roles);
+      sheet.getRangeByIndex(row, 10).setText(anggota.tanggalBergabungISO());
+      sheet.getRangeByIndex(row, 11).setText(anggota.pekerjaan);
+      sheet.getRangeByIndex(row, 12).setText(anggota.alamat);
+      sheet.getRangeByIndex(row, 13).setText(anggota.fotoProfilUrl);
+    }
+
+    final List<int> bytes = workbook.saveAsStream();
+    workbook.dispose();
+    final String path = (await getApplicationSupportDirectory()).path;
+    final String fileName = '$path/AnggotaAmanahArchery.xlsx';
+    final File file = File(fileName);
+    await file.writeAsBytes(bytes, flush: true);
+    OpenFile.open(fileName);
   }
 }

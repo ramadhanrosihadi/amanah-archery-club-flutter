@@ -15,7 +15,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   List<MenuModel> menus = [
-    MenuModel(0, 'Anggota Klub', KeanggotaanMainScreen(), Icons.usb_rounded),
+    MenuModel(0, 'Anggota', KeanggotaanMainScreen(), Icons.usb_rounded),
     MenuModel(1, 'Pelatihan', PelatihanMainScreen(), Icons.exit_to_app),
     MenuModel(2, 'Absensi', AbsensiMainScreen(), Icons.note_alt_sharp),
   ];
@@ -46,21 +46,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         },
                         child: Container(
                           padding: const EdgeInsets.all(15),
-                          // margin: const EdgeInsets.only(right: 20),
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(14), boxShadow: [
-                            BoxShadow(
-                              color: VColor.colorPrimary.withOpacity(0.1),
-                              spreadRadius: 1,
-                              blurRadius: 1,
-                            ),
-                          ]),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(14), color: VColor.colorPrimary),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(data.iconData, size: 30),
+                              Icon(data.iconData, size: 30, color: Colors.white),
                               const SizedBox(height: 15),
-                              Text(data.label),
+                              Text(
+                                data.label,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ],
                           ),
                         ),

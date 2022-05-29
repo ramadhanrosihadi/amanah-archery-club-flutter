@@ -64,13 +64,6 @@ class _UpsertSesiScreenState extends State<UpsertSesiScreen> {
       sesi = widget.sesi!;
       catatanController.text = Fun.replaceEmpty(sesi.catatan);
       tanggalController.text = Fun.replaceEmpty(sesi.tanggal);
-
-      // DateTime defaultDate = DateTime.now();
-      // if (waktuMulaiLatihan != null) {
-      //   defaultDate = waktuMulaiLatihan!;
-      // }
-      // waktuMulaiLatihan = DateTime(defaultDate.year, defaultDate.month, defaultDate.day, result.hour, result.minute);
-      // waktuMulaiController.text = result.format(context);
       waktuMulaiController.text = Fun.replaceEmpty(sesi.waktuMulai);
       waktuSelesaiController.text = Fun.replaceEmpty(sesi.waktuSelesai);
     }
