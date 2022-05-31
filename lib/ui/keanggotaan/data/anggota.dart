@@ -21,7 +21,6 @@ class Anggota {
   Timestamp? tanggalLahir;
   Timestamp? tanggalBergabung;
   String? jenisKelamin;
-  String? nik;
   String? pekerjaan;
   int? totalLatihan;
   String? kategori;
@@ -39,7 +38,6 @@ class Anggota {
     this.tanggalLahir,
     this.tanggalBergabung,
     this.jenisKelamin = '',
-    this.nik = '',
     this.pekerjaan = '',
     this.totalLatihan = 0,
     this.kategori = '',
@@ -60,7 +58,6 @@ class Anggota {
       'tanggalLahir': tanggalLahir,
       'tanggalBergabung': tanggalBergabung,
       'jenisKelamin': jenisKelamin,
-      'nik': nik,
       'pekerjaan': pekerjaan,
       'totalLatihan': totalLatihan,
       'kategori': kategori,
@@ -80,7 +77,6 @@ class Anggota {
       'email': email,
       'alamat': alamat,
       'jenisKelamin': jenisKelamin,
-      'nik': nik,
       'pekerjaan': pekerjaan,
       'totalLatihan': totalLatihan,
       'kategori': kategori,
@@ -102,7 +98,6 @@ class Anggota {
       tanggalLahir: map['tanggalLahir'],
       tanggalBergabung: map['tanggalBergabung'],
       jenisKelamin: map['jenisKelamin'] ?? '',
-      nik: map['nik'] ?? '',
       pekerjaan: map['pekerjaan'] ?? '',
       totalLatihan: map['totalLatihan']?.toInt() ?? 0,
       kategori: map['kategori'] ?? '',
@@ -128,7 +123,6 @@ class Anggota {
       // tanggalLahir: map['tanggalLahir'],
       // tanggalBergabung: map['tanggalBergabung'],
       jenisKelamin: map['jenisKelamin'] ?? '',
-      nik: map['nik'] ?? '',
       pekerjaan: map['pekerjaan'] ?? '',
       totalLatihan: map['totalLatihan']?.toInt() ?? 0,
       kategori: map['kategori'] ?? '',
@@ -179,16 +173,18 @@ class Anggota {
     return VTime.fromTimeStampToDefaultFormat(tanggalLahir);
   }
 
-  int umur() {
-    return VTime.yearDurationFromTimeStamp(tanggalLahir);
+  String umur() {
+    int umurx = VTime.yearDurationFromTimeStamp(tanggalLahir);
+    if (umurx > 0) return '$umurx tahun';
+    return '(belum input tanggal lahir)';
   }
 
   static Future<bool> insert(BuildContext context, Anggota anggota) async {
     CollectionReference datas = FirebaseFirestore.instance.collection('anggotas');
     List<Anggota> anggotas = await Anggota.gets();
     for (Anggota item in anggotas) {
-      if (item.nomorHp == anggota.nomorHp) {
-        await VDialog.createDialog(context, message: 'Nomor hp sudah didaftarkan', withBackButton: false);
+      if (item.username == anggota.username) {
+        // await VDialog.createDialog(context, message: 'Username ${anggota.username} sudah didaftarkan', withBackButton: false);
         return false;
       }
     }
@@ -345,5 +341,20 @@ class Anggota {
     final File file = File(fileName);
     await file.writeAsBytes(bytes, flush: true);
     OpenFile.open(fileName);
+  }
+
+  static String numberToCode(int value) {
+    if (value < 1000) {
+      if (value < 100) {
+        if (value < 10) {
+          return '000$value';
+        } else {
+          return '00$value';
+        }
+      } else {
+        return '0$value';
+      }
+    }
+    return value.toString();
   }
 }

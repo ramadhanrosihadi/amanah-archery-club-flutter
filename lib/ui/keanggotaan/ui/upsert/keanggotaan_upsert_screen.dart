@@ -40,20 +40,7 @@ class _KeanggotaanUpsertScreenState extends State<KeanggotaanUpsertScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.anggota == null && Var.isDebugMode) {
-      setState(() {
-        namaController.text = 'Qonita Luthfia';
-        jenisKelaminController.text = 'Akhwat';
-        nomorHpController.text = '081234545';
-        alamatController.text = 'Jl. Wonorejo Timur no.9, Rungkut, Surabaya';
-        tanggalLahirController.text = '2021-03-12';
-        tanggalLahir = Timestamp.fromDate(DateTime(1994, 3, 12));
-        tanggalDaftarController.text = '2021-12-10';
-        tanggalDaftar = Timestamp.fromDate(DateTime(2021, 12, 10));
-        nikController.text = '0123456789123456';
-        pekerjaanController.text = 'Programmer';
-      });
-    } else if (widget.anggota != null) {
+    if (widget.anggota != null) {
       setState(() {
         anggota = widget.anggota!;
         namaController.text = Fun.replaceEmpty(anggota.nama);
@@ -64,7 +51,6 @@ class _KeanggotaanUpsertScreenState extends State<KeanggotaanUpsertScreen> {
         tanggalLahir = anggota.tanggalLahir;
         tanggalDaftarController.text = anggota.tanggalBergabungString();
         tanggalDaftar = anggota.tanggalBergabung;
-        nikController.text = Fun.replaceEmpty(anggota.nik);
         pekerjaanController.text = Fun.replaceEmpty(anggota.pekerjaan);
         aksesController.text = Fun.replaceEmpty(anggota.roles);
       });
@@ -83,24 +69,6 @@ class _KeanggotaanUpsertScreenState extends State<KeanggotaanUpsertScreen> {
     } else if (jenisKelaminController.text.isEmpty) {
       VDialog.createDialog(context, message: 'Jenis kelamin wajib diisi', title: 'Gagal');
       return false;
-    } else if (nomorHpController.text.isEmpty) {
-      VDialog.createDialog(context, message: 'Nomor hp wajib diisi', title: 'Gagal');
-      return false;
-    } else if (alamatController.text.isEmpty) {
-      VDialog.createDialog(context, message: 'Alamat wajib diisi', title: 'Gagal');
-      return false;
-    } else if (tanggalLahir == null) {
-      VDialog.createDialog(context, message: 'Tanggal lahir wajib diisi', title: 'Gagal');
-      return false;
-    } else if (tanggalDaftar == null) {
-      VDialog.createDialog(context, message: 'Tanggal daftar wajib diisi', title: 'Gagal');
-      return false;
-    } else if (nikController.text.isEmpty) {
-      VDialog.createDialog(context, message: 'NIK wajib diisi', title: 'Gagal');
-      return false;
-    } else if (pekerjaanController.text.isEmpty) {
-      VDialog.createDialog(context, message: 'Pekerjaan wajib diisi', title: 'Gagal');
-      return false;
     }
     anggota.nama = namaController.text;
     anggota.jenisKelamin = jenisKelaminController.text;
@@ -108,10 +76,9 @@ class _KeanggotaanUpsertScreenState extends State<KeanggotaanUpsertScreen> {
     anggota.alamat = alamatController.text;
     anggota.tanggalLahir = tanggalLahir;
     anggota.tanggalBergabung = tanggalDaftar;
-    anggota.nik = nikController.text;
     anggota.pekerjaan = pekerjaanController.text;
     anggota.password = Anggota.defaultPassword;
-    anggota.roles = 'anggota';
+    if (anggota.roles == '') anggota.roles = 'anggota';
     return true;
   }
 
@@ -180,13 +147,11 @@ class _KeanggotaanUpsertScreenState extends State<KeanggotaanUpsertScreen> {
               const SizedBox(height: 20),
               FieldCustom(controller: namaController, label: 'Nama'),
               const SizedBox(height: 15),
-              Text('${user!.roles}'),
-              const SizedBox(height: 15),
               FieldCustom(
                 controller: jenisKelaminController,
                 label: 'Jenis Kelamin',
                 onTapDown: (TapDownDetails tapDownDetails) async {
-                  String? result = await VDialog.showListPopUp(context, tapDownDetails, ['Ikhwan', 'Akhwat'], null);
+                  String? result = await VDialog.showListPopUp(context, tapDownDetails, ['Putra', 'Putri'], null);
                   if (result != null) {
                     setState(() {
                       jenisKelaminController.text = result;
@@ -246,13 +211,6 @@ class _KeanggotaanUpsertScreenState extends State<KeanggotaanUpsertScreen> {
                     });
                   }
                 },
-              ),
-              const SizedBox(height: 15),
-              FieldCustom(
-                controller: nikController,
-                label: 'NIK',
-                textInputType: TextInputType.number,
-                maxLength: 16,
               ),
               const SizedBox(height: 15),
               FieldCustom(controller: pekerjaanController, label: 'Pekerjaan'),

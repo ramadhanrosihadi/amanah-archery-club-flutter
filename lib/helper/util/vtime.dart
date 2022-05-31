@@ -25,6 +25,12 @@ class VTime {
     }
   }
 
+  static Timestamp? dateTimeStringToTimestamp(String dateTimeString) {
+    DateTime? dateTime = DateTime.tryParse(dateTimeString);
+    if (dateTime != null) return Timestamp.fromDate(dateTime);
+    return null;
+  }
+
   static String fromTimeStampToView(Timestamp? timestamp) {
     if (timestamp == null) return '';
     var date = DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch);

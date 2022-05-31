@@ -38,7 +38,7 @@ class _KeanggotaanMainScreenState extends State<KeanggotaanMainScreen> {
   Widget build(BuildContext context) {
     Query<Map<String, dynamic>> jamaahs = FirebaseFirestore.instance.collection('anggotas');
     return ScaffoldDefault(
-      textTitle: 'List Anggota Klub',
+      textTitle: 'List Anggota',
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Nav.push(context, KeanggotaanUpsertScreen());
@@ -73,11 +73,11 @@ class _KeanggotaanMainScreenState extends State<KeanggotaanMainScreen> {
           if (snapshot.hasData) {
             List<Anggota> datas = Anggota.getDataFromSnapshot(snapshot.data);
             return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
                     ListView.builder(
                       itemBuilder: (context, index) {
                         return GestureDetector(
@@ -94,7 +94,7 @@ class _KeanggotaanMainScreenState extends State<KeanggotaanMainScreen> {
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
                   ],
                 ),
               ),

@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:starter_d/helper/constant/vcolor.dart';
 import 'package:starter_d/helper/util/vdialog.dart';
+import 'package:starter_d/helper/util/vtime.dart';
 import 'package:starter_d/helper/widget/button_default.dart';
 import 'package:starter_d/helper/widget/scaffold_default.dart';
 
@@ -122,6 +123,7 @@ class _KeanggotaanMigrasiScreenState extends State<KeanggotaanMigrasiScreen> {
                   SizedBox(height: 10),
                   Builder(
                     builder: (context) {
+                      if (fileImportExcelAnggota == null) return const SizedBox();
                       if (isLoadingImport) return DefaultLoading(height: 40);
                       return ButtonDefault(
                         text: 'Import Data Anggota',
@@ -136,17 +138,18 @@ class _KeanggotaanMigrasiScreenState extends State<KeanggotaanMigrasiScreen> {
                           int succeedCount = 0;
                           for (int rowIndex = 1; rowIndex < sheet.maxRows; rowIndex++) {
                             Anggota newAnggota = Anggota(
-                              code: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 3, rowIndex: rowIndex)).value,
-                              nama: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 4, rowIndex: rowIndex)).value,
-                              jenisKelamin: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 5, rowIndex: rowIndex)).value,
-                              nomorHp: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 6, rowIndex: rowIndex)).value,
-                              email: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 7, rowIndex: rowIndex)).value,
-                              tanggalLahir: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 8, rowIndex: rowIndex)).value,
-                              roles: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 9, rowIndex: rowIndex)).value,
-                              tanggalBergabung: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 10, rowIndex: rowIndex)).value,
-                              pekerjaan: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 11, rowIndex: rowIndex)).value,
-                              alamat: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 12, rowIndex: rowIndex)).value,
-                              fotoProfilUrl: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 13, rowIndex: rowIndex)).value,
+                              code: Anggota.numberToCode(int.tryParse(sheet.cell(CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: rowIndex)).value.toString()) ?? 0),
+                              username: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 2, rowIndex: rowIndex)).value.toString(),
+                              nama: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 3, rowIndex: rowIndex)).value.toString(),
+                              jenisKelamin: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 4, rowIndex: rowIndex)).value.toString(),
+                              nomorHp: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 5, rowIndex: rowIndex)).value.toString(),
+                              email: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 6, rowIndex: rowIndex)).value.toString(),
+                              tanggalLahir: VTime.dateTimeStringToTimestamp(sheet.cell(CellIndex.indexByColumnRow(columnIndex: 7, rowIndex: rowIndex)).value.toString()),
+                              roles: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 8, rowIndex: rowIndex)).value.toString(),
+                              tanggalBergabung: VTime.dateTimeStringToTimestamp(sheet.cell(CellIndex.indexByColumnRow(columnIndex: 9, rowIndex: rowIndex)).value.toString()),
+                              pekerjaan: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 10, rowIndex: rowIndex)).value.toString(),
+                              alamat: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 11, rowIndex: rowIndex)).value.toString(),
+                              fotoProfilUrl: sheet.cell(CellIndex.indexByColumnRow(columnIndex: 12, rowIndex: rowIndex)).value,
                             );
                             bool result = await Anggota.insert(context, newAnggota);
                             if (!result) {
